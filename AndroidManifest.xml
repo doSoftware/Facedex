@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.dosoftware.facedex"
+    android:versionCode="80"
+    android:versionName="4.1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="7"
+        android:targetSdkVersion="15" />
+
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+
+    <application
+        android:label="@string/application_name"
+        android:theme="@style/Theme.Sherlock" >
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/mainactivity_name"
+            android:screenOrientation="landscape" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".FaceRecActivity"
+            android:label="@string/application_name" />
+        <activity
+            android:name=".PersonActivity"
+            android:label="@string/application_name"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".DisplayDescriptionActivity"
+            android:label="@string/application_name" >
+        </activity>
+        <activity
+            android:name=".DisplayDescriptionSelectActivity"
+            android:label="@string/application_name" >
+        </activity>
+    </application>
+
+</manifest>
