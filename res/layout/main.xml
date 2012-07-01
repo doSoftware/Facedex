@@ -7,19 +7,16 @@
     
     
 
-    <fragment
+    <LinearLayout
         android:id="@+id/leftFragment"
         android:layout_width="150dip"
-        android:layout_height="match_parent"
-        class="com.dosoftware.facedex.RecentImageListFragment" >
-    </fragment>
+        android:layout_height="match_parent" >
+    </LinearLayout>
 
-    <fragment
+    <LinearLayout
         android:id="@+id/rightFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        class="com.dosoftware.facedex.DetailFragment"
-        tools:layout="@layout/fragment_details" >
-    </fragment>
+        android:layout_height="match_parent" >
+    </LinearLayout>
 
 </LinearLayout>

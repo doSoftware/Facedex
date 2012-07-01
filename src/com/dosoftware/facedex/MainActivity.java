@@ -26,6 +26,7 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 	private Fragment camFrag;
 	private boolean useLogo = false;
 	private String[] tabs;
+	private LoadingFragment loadFrag;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -46,9 +47,11 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 		leftFrag = new RecentImageListFragment();
 		rightFrag = new DetailFragment();
 		camFrag = new CameraFragment();
+		loadFrag = new LoadingFragment();
 
 		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-		FragmentHelper.showDetailFragment(ft, leftFrag, rightFrag, camFrag);
+		FragmentHelper.showDetailFragment(ft, leftFrag, rightFrag, camFrag, loadFrag);
+		ft.commit();
 		
 		//FragmentHelper.showDetailFragment(ft);
 
@@ -181,13 +184,14 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 		switch(tab.getPosition()) {
 		// Details
 		case 0:
-			FragmentHelper.showDetailFragment(ft, leftFrag, rightFrag, camFrag);
+			FragmentHelper.showDetailFragment(ft, leftFrag, rightFrag, camFrag, loadFrag);
 			break;
 			// Camera
 		case 1:
-			FragmentHelper.showCameraFragment(ft, leftFrag, rightFrag, camFrag);
+			FragmentHelper.showCameraFragment(ft, leftFrag, rightFrag, camFrag, loadFrag);
 			break;
 		case 2: 
+			FragmentHelper.showLoadingFragment(ft, leftFrag, rightFrag, camFrag, loadFrag);
 			break;
 		}
 		

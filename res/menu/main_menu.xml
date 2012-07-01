@@ -24,9 +24,9 @@
 	<!--
 	<item android:id="@+id/menu_logo" android:showAsAction="ifRoom"
 		android:checkable="true" android:checked="false" android:title="@string/action_label_logo" /> -->
-
+<!--
 	<item android:id="@+id/menu_up" android:showAsAction="ifRoom"
-		android:checkable="true" android:checked="false" android:title="@string/action_label_up" />
+		android:checkable="true" android:checked="false" android:title="@string/action_label_up" /> -->
 
 	<!-- Navigation submenu 
 	<item android:id="@+id/menu_nav" android:title="@string/action_label_nav">

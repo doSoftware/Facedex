@@ -834,7 +834,6 @@ containing a value of this type.
         public static final int imageView1=0x7f050027;
         public static final int leftFragment=0x7f05002f;
         public static final int listMode=0x7f050002;
-        public static final int menu_up=0x7f050031;
         public static final int normal=0x7f050001;
         public static final int progressBar1=0x7f050028;
         public static final int rightFragment=0x7f050030;
