@@ -5,15 +5,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.view.View;
-import android.widget.TextView;
-
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
-import com.nineoldandroids.animation.AnimatorSet;
-import com.nineoldandroids.animation.ObjectAnimator;
 
 
 public class MainActivity extends SherlockFragmentActivity implements ActionBar.TabListener {
@@ -186,8 +181,9 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 		// FIXME add a proper implementation, for now just rotate the left
 		// fragment
 		//rotateRightFrag();
-//		ft.replace(R.id.detailFragment, new DetailFragment());
-//		ft.commit();
+//		ft.add(R.id.detailFragment, new CameraFragment(getResources().getColor(
+//                R.color.android_green), 1f, 0, 0, 0, 0));
+		//ft.commit();
 	}
 
 	public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {

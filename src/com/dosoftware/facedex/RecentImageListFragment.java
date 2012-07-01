@@ -4,13 +4,15 @@ import com.actionbarsherlock.app.SherlockListFragment;
 import com.dosoftware.utils.IntentHelper;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
-public class DemoListFragment extends SherlockListFragment {
+public class RecentImageListFragment extends SherlockListFragment {
 	
-	public DemoListFragment() {
+	public RecentImageListFragment() {
 		
 	}
 	
@@ -32,13 +34,16 @@ public class DemoListFragment extends SherlockListFragment {
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
 		String item = (String) getListAdapter().getItem(position);
-		DetailFragment fragment = (DetailFragment) getFragmentManager()
+		Fragment fragment;
+		fragment = (Fragment) getFragmentManager()
 				.findFragmentById(R.id.detailFragment);
-		if (fragment != null && fragment.isInLayout()) {
-			fragment.setText(item);
-		} else {
-			startActivity(IntentHelper.startActivityFragmentDetail(getActivity(), item));
+		if(fragment != null && fragment.getClass() == DetailFragment.class) {
+			DetailFragment f = (DetailFragment) getFragmentManager()
+					.findFragmentById(R.id.detailFragment);
+			f.setText(item);
 		}
-
+		else if(fragment != null && fragment.getClass() == CameraFragment.class) {
+			
+		}
 	}
 }

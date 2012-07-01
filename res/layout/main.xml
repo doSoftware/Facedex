@@ -8,7 +8,7 @@
         android:id="@+id/listFragment"
         android:layout_width="150dip"
         android:layout_height="match_parent"
-        class="com.dosoftware.facedex.DemoListFragment" >
+        class="com.dosoftware.facedex.RecentImageListFragment" >
     </fragment>
 
     <fragment
@@ -17,7 +17,6 @@
         android:layout_height="match_parent"
         class="com.dosoftware.facedex.DetailFragment"
         tools:layout="@layout/fragment_details" >
-
     </fragment>
 
 </LinearLayout>
