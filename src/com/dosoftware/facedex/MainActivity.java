@@ -3,18 +3,21 @@ package com.dosoftware.facedex;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.actionbarsherlock.internal.nineoldandroids.animation.ObjectAnimator;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.nineoldandroids.animation.AnimatorSet;
+import com.nineoldandroids.animation.ObjectAnimator;
+
 
 public class MainActivity extends SherlockFragmentActivity implements ActionBar.TabListener {
 
 	private final Handler handler = new Handler();
-	private DetailFragment leftFrag;
-	private DetailFragment rightFrag;
+	private Fragment leftFrag;
+	private Fragment rightFrag;
 	private boolean useLogo = false;
 	private boolean showHomeUp = false;
 
@@ -23,17 +26,34 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
+		final ActionBar ab = getSupportActionBar();
 
+		// set up tabs nav
+		for (int i = 1; i < 4; i++) {
+			ab.addTab(ab.newTab().setText("Tab " + i).setTabListener(this));
+		}
 		// default to tab navigation
 		showTabsNav();
+
+		leftFrag = 	(Fragment) getSupportFragmentManager()
+				.findFragmentById(R.id.listFragment);
+		rightFrag = 	(Fragment) getSupportFragmentManager()
+				.findFragmentById(R.id.detailFragment);
+
 		//    
-//		//    // create a couple of simple fragments as placeholders
-//		final int MARGIN = 16;
-//		leftFrag = new CameraFragment(getResources().getColor(
-//				R.color.android_green), 1f, MARGIN, MARGIN / 2, MARGIN, MARGIN);
-//		rightFrag = new CameraFragment(getResources().getColor(
-//				R.color.honeycombish_blue), 2f, MARGIN / 2, MARGIN, MARGIN,
-//				MARGIN);
+		//		//    // create a couple of simple fragments as placeholders
+		//		final int MARGIN = 16;
+		//		leftFrag = new CameraFragment(getResources().getColor(
+		//				R.color.android_green), 1f, MARGIN, MARGIN / 2, MARGIN, MARGIN);
+		//		rightFrag = new CameraFragment(getResources().getColor(
+		//				R.color.honeycombish_blue), 2f, MARGIN / 2, MARGIN, MARGIN,
+		//				MARGIN);
+		//FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+		//ft.setCustomAnimations(R.anim.rotate, R.anim.rotate);
+		//		ft.replace(arg0, arg1)
+		//        ft.add(R.id.listFragment, leftFrag);
+		//        ft.add(R.id.detailFragment, rightFrag);
+		// ft.commit();
 	}
 
 	@Override
@@ -60,65 +80,78 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-//		case android.R.id.home:
-//			// TODO handle clicking the app icon/logo
-//			return false;
-//			//        case R.id.menu_refresh:
-//			//            // switch to a progress animation
-//			//            item.setActionView(R.layout.indeterminate_progress_action);
-//			//            return true;
-//			//        case R.id.menu_both:
-//			//            // rotation animation of green fragment
-//			//            rotateLeftFrag();
-//			//            return true;
-//		case R.id.menu_text:
-//			// alpha animation of blue fragment
-//			ObjectAnimator alpha = ObjectAnimator.ofFloat(rightFrag.getView(),
-//					"alpha", 1f, 0f);
-//			alpha.setRepeatMode(ObjectAnimator.REVERSE);
-//			alpha.setRepeatCount(1);
-//			alpha.setDuration(800);
-//			alpha.start();
-//			return true;
-//		case R.id.menu_logo:
-//			useLogo = !useLogo;
-//			item.setChecked(useLogo);
-//			getSupportActionBar().setDisplayUseLogoEnabled(useLogo);
-//			return true;
-//		case R.id.menu_up:
-//			showHomeUp = !showHomeUp;
-//			item.setChecked(showHomeUp);
-//			getSupportActionBar().setDisplayHomeAsUpEnabled(showHomeUp);
-//			return true;
-			//        case R.id.menu_nav_tabs:
-			//            item.setChecked(true);
-			//            showTabsNav();
-			//            return true;
-			//        case R.id.menu_nav_label:
-			//            item.setChecked(true);
-			//            showStandardNav();
-			//            return true;
-			//        case R.id.menu_nav_drop_down:
-			//            item.setChecked(true);
-			//            showDropDownNav();
-			//            return true;
-//		case R.id.menu_bak_none:
-//			item.setChecked(true);
-//			getSupportActionBar().setBackgroundDrawable(null);
-//			return true;
-//		case R.id.menu_bak_gradient:
-//			item.setChecked(true);
-//			//getSupportActionBar().setBackgroundDrawable(getResources().getDrawable(R.drawable.ad_action_bar_gradient_bak));
-//			return true;
+		//		case android.R.id.home:
+		//			// TODO handle clicking the app icon/logo
+		//			return false;
+		//			//        case R.id.menu_refresh:
+		//			//            // switch to a progress animation
+		//			//            item.setActionView(R.layout.indeterminate_progress_action);
+		//			//            return true;
+		//			//        case R.id.menu_both:
+		//			//            // rotation animation of green fragment
+		//			//            rotateLeftFrag();
+		//			//            return true;
+		//		case R.id.menu_text:
+		//			// alpha animation of blue fragment
+		//			ObjectAnimator alpha = ObjectAnimator.ofFloat(rightFrag.getView(),
+		//					"alpha", 1f, 0f);
+		//			alpha.setRepeatMode(ObjectAnimator.REVERSE);
+		//			alpha.setRepeatCount(1);
+		//			alpha.setDuration(800);
+		//			alpha.start();
+		//			return true;
+		//		case R.id.menu_logo:
+		//			useLogo = !useLogo;
+		//			item.setChecked(useLogo);
+		//			getSupportActionBar().setDisplayUseLogoEnabled(useLogo);
+		//			return true;
+		//		case R.id.menu_up:
+		//			showHomeUp = !showHomeUp;
+		//			item.setChecked(showHomeUp);
+		//			getSupportActionBar().setDisplayHomeAsUpEnabled(showHomeUp);
+		//			return true;
+		//        case R.id.menu_nav_tabs:
+		//            item.setChecked(true);
+		//            showTabsNav();
+		//            return true;
+		//        case R.id.menu_nav_label:
+		//            item.setChecked(true);
+		//            showStandardNav();
+		//            return true;
+		//        case R.id.menu_nav_drop_down:
+		//            item.setChecked(true);
+		//            showDropDownNav();
+		//            return true;
+		//		case R.id.menu_bak_none:
+		//			item.setChecked(true);
+		//			getSupportActionBar().setBackgroundDrawable(null);
+		//			return true;
+		//		case R.id.menu_bak_gradient:
+		//			item.setChecked(true);
+		//			//getSupportActionBar().setBackgroundDrawable(getResources().getDrawable(R.drawable.ad_action_bar_gradient_bak));
+		//			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
 	}
 
-	private void rotateLeftFrag() {
-		if (leftFrag != null) {
-			ObjectAnimator.ofFloat(leftFrag.getView(), "rotationY", 0, 180)
-			.setDuration(500).start();
+	private void rotateRightFrag() {
+		if (rightFrag != null) {
+			//rightFrag.getView().animate()
+			AnimatorSet set = new AnimatorSet();
+			set.playTogether(
+//			    ObjectAnimator.ofFloat(myView, "rotationX", 0, 360),
+			    ObjectAnimator.ofFloat(rightFrag.getView(), "rotationY", 0, 180)
+//			    ObjectAnimator.ofFloat(myView, "rotation", 0, -90),
+//			    ObjectAnimator.ofFloat(myView, "translationX", 0, 90),
+//			    ObjectAnimator.ofFloat(myView, "translationY", 0, 90),
+//			    ObjectAnimator.ofFloat(myView, "scaleX", 1, 1.5f),
+//			    ObjectAnimator.ofFloat(myView, "scaleY", 1, 0.5f),
+//			    ObjectAnimator.ofFloat(myView, "alpha", 1, 0.25f, 1)
+			);
+			set.setDuration(5 * 1000).start();
+//			ObjectAnimator.ofFloat(rightFrag.getView(), "alpha", 0f)
+//			.setDuration(500).start();
 		}
 	}
 
@@ -149,7 +182,7 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 	public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
 		// FIXME add a proper implementation, for now just rotate the left
 		// fragment
-		rotateLeftFrag();
+		rotateRightFrag();
 	}
 
 	public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {

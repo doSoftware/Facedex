@@ -1,5 +1,6 @@
 package com.dosoftware.facedex;
 
+import com.actionbarsherlock.app.SherlockListFragment;
 import com.dosoftware.utils.IntentHelper;
 
 import android.os.Bundle;
@@ -7,7 +8,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-public class DemoListFragment extends android.support.v4.app.ListFragment {
+public class DemoListFragment extends SherlockListFragment {
 	
 	public DemoListFragment() {
 		
