@@ -36,10 +36,10 @@ public class RecentImageListFragment extends SherlockListFragment {
 		String item = (String) getListAdapter().getItem(position);
 		Fragment fragment;
 		fragment = (Fragment) getFragmentManager()
-				.findFragmentById(R.id.detailFragment);
+				.findFragmentById(R.id.rightFragment);
 		if(fragment != null && fragment.getClass() == DetailFragment.class) {
 			DetailFragment f = (DetailFragment) getFragmentManager()
-					.findFragmentById(R.id.detailFragment);
+					.findFragmentById(R.id.rightFragment);
 			f.setText(item);
 		}
 		else if(fragment != null && fragment.getClass() == CameraFragment.class) {

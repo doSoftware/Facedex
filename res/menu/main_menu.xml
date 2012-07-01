@@ -17,17 +17,18 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
 
-	<!-- text -->
+	<!-- text 
 	<item android:id="@+id/menu_text" android:showAsAction="ifRoom"
-		android:title="@string/action_label_text" />
+		android:title="@string/action_label_text" /> -->
 
+	<!--
 	<item android:id="@+id/menu_logo" android:showAsAction="ifRoom"
-		android:checkable="true" android:checked="false" android:title="@string/action_label_logo" />
+		android:checkable="true" android:checked="false" android:title="@string/action_label_logo" /> -->
 
 	<item android:id="@+id/menu_up" android:showAsAction="ifRoom"
 		android:checkable="true" android:checked="false" android:title="@string/action_label_up" />
 
-	<!-- Navigation submenu -->
+	<!-- Navigation submenu 
 	<item android:id="@+id/menu_nav" android:title="@string/action_label_nav">
 		<menu>
 			<group android:id="@+id/menu_nav_group"
@@ -40,9 +41,9 @@
 				<item android:id="@+id/menu_nav_label" android:title="@string/action_label_nav_label" />
 			</group>
 		</menu>
-	</item>
+	</item> -->
 
-	<!-- action bar background submenu -->
+	<!-- action bar background submenu 
 	<item android:id="@+id/menu_bak" android:title="@string/action_label_bak">
 		<menu>
 			<group android:id="@+id/menu_bak_group"
@@ -50,11 +51,11 @@
 				
 				<item android:id="@+id/menu_bak_none" android:title="@string/action_label_bak_none" android:checked="true" />
 
-				<item android:id="@+id/menu_bak_gradient" android:title="@string/action_label_bak_gradient" />
+				<item android:id="@+id/menu_bak_gradient" android:title="@string/action_label_bak_gradient" />-->
 
 				<!--<item android:id="@+id/menu_bak_9_patch" android:title="@string/action_label_image" />-->
-			</group>
+			<!-- </group>
 		</menu>
-	</item>
+	</item> -->
 
 </menu>

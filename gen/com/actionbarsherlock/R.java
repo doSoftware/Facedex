@@ -12,7 +12,7 @@ public final class R {
         public static final int rotate=0x7f040000;
     }
     public static final class array {
-        public static final int sections=0x7f0c0000;
+        public static final int tabs=0x7f0c0000;
     }
     public static final class attr {
         /**  Specified if we are forcing an action item overflow menu. 
@@ -827,28 +827,17 @@ containing a value of this type.
         public static final int abs__title=0x7f05001b;
         public static final int abs__titleDivider=0x7f05001c;
         public static final int abs__up=0x7f05000b;
-        public static final int detailFragment=0x7f05002f;
         public static final int detailsText=0x7f05002c;
         public static final int disableHome=0x7f050009;
         public static final int facerecad=0x7f050029;
         public static final int homeAsUp=0x7f050006;
         public static final int imageView1=0x7f050027;
-        public static final int listFragment=0x7f05002e;
+        public static final int leftFragment=0x7f05002e;
         public static final int listMode=0x7f050002;
-        public static final int menu_bak=0x7f050038;
-        public static final int menu_bak_gradient=0x7f05003b;
-        public static final int menu_bak_group=0x7f050039;
-        public static final int menu_bak_none=0x7f05003a;
-        public static final int menu_logo=0x7f050031;
-        public static final int menu_nav=0x7f050033;
-        public static final int menu_nav_drop_down=0x7f050036;
-        public static final int menu_nav_group=0x7f050034;
-        public static final int menu_nav_label=0x7f050037;
-        public static final int menu_nav_tabs=0x7f050035;
-        public static final int menu_text=0x7f050030;
-        public static final int menu_up=0x7f050032;
+        public static final int menu_up=0x7f050030;
         public static final int normal=0x7f050001;
         public static final int progressBar1=0x7f050028;
+        public static final int rightFragment=0x7f05002f;
         public static final int showCustom=0x7f050008;
         public static final int showHome=0x7f050005;
         public static final int showTitle=0x7f050007;

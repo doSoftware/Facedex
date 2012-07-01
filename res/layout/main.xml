@@ -5,14 +5,14 @@
     android:layout_height="fill_parent" >
 
     <fragment
-        android:id="@+id/listFragment"
+        android:id="@+id/leftFragment"
         android:layout_width="150dip"
         android:layout_height="match_parent"
         class="com.dosoftware.facedex.RecentImageListFragment" >
     </fragment>
 
     <fragment
-        android:id="@+id/detailFragment"
+        android:id="@+id/rightFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         class="com.dosoftware.facedex.DetailFragment"

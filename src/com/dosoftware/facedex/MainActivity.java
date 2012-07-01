@@ -1,14 +1,19 @@
 package com.dosoftware.facedex;
 
 
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.widget.ArrayAdapter;
+
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.app.ActionBar.OnNavigationListener;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.nineoldandroids.animation.ObjectAnimator;
 
 
 public class MainActivity extends SherlockFragmentActivity implements ActionBar.TabListener {
@@ -18,6 +23,7 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 	private Fragment rightFrag;
 	private boolean useLogo = false;
 	private boolean showHomeUp = false;
+	private String[] tabs;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -27,16 +33,25 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 		final ActionBar ab = getSupportActionBar();
 
 		// set up tabs nav
-		for (int i = 1; i < 4; i++) {
-			ab.addTab(ab.newTab().setText("Tab " + i).setTabListener(this));
-		}
+		Resources res = getResources();
+		tabs = res.getStringArray(R.array.tabs);
+		for(String t : tabs) {
+			ab.addTab(ab.newTab().setText(t).setTabListener(this));
+		}        
 		// default to tab navigation
 		showTabsNav();
-
-		leftFrag = 	(Fragment) getSupportFragmentManager()
-				.findFragmentById(R.id.listFragment);
-		rightFrag = 	(Fragment) getSupportFragmentManager()
-				.findFragmentById(R.id.detailFragment);
+		leftFrag = new RecentImageListFragment();
+		rightFrag = new DetailFragment();
+		
+		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+		ft.replace(R.id.leftFragment, leftFrag);
+		ft.replace(R.id.rightFragment, rightFrag);
+		ft.commit();
+		
+//		leftFrag = 		(Fragment) getSupportFragmentManager()
+//				.findFragmentById(R.id.leftFragment);
+//		rightFrag = 	(Fragment) getSupportFragmentManager()
+//				.findFragmentById(R.id.rightFragment);
 
 		//    
 		//		//    // create a couple of simple fragments as placeholders
@@ -89,25 +104,25 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 		//			//            // rotation animation of green fragment
 		//			//            rotateLeftFrag();
 		//			//            return true;
-		//		case R.id.menu_text:
-		//			// alpha animation of blue fragment
-		//			ObjectAnimator alpha = ObjectAnimator.ofFloat(rightFrag.getView(),
-		//					"alpha", 1f, 0f);
-		//			alpha.setRepeatMode(ObjectAnimator.REVERSE);
-		//			alpha.setRepeatCount(1);
-		//			alpha.setDuration(800);
-		//			alpha.start();
-		//			return true;
-		//		case R.id.menu_logo:
-		//			useLogo = !useLogo;
-		//			item.setChecked(useLogo);
-		//			getSupportActionBar().setDisplayUseLogoEnabled(useLogo);
-		//			return true;
-		//		case R.id.menu_up:
-		//			showHomeUp = !showHomeUp;
-		//			item.setChecked(showHomeUp);
-		//			getSupportActionBar().setDisplayHomeAsUpEnabled(showHomeUp);
-		//			return true;
+//				case R.id.menu_text:
+//					// alpha animation of blue fragment
+//					ObjectAnimator alpha = ObjectAnimator.ofFloat(rightFrag.getView(),
+//							"alpha", 1f, 0f);
+//					alpha.setRepeatMode(ObjectAnimator.REVERSE);
+//					alpha.setRepeatCount(1);
+//					alpha.setDuration(800);
+//					alpha.start();
+//					return true;
+//				case R.id.menu_logo:
+//					useLogo = !useLogo;
+//					item.setChecked(useLogo);
+//					getSupportActionBar().setDisplayUseLogoEnabled(useLogo);
+//					return true;
+//				case R.id.menu_up:
+//					showHomeUp = !showHomeUp;
+//					item.setChecked(showHomeUp);
+//					getSupportActionBar().setDisplayHomeAsUpEnabled(showHomeUp);
+//					return true;
 		//        case R.id.menu_nav_tabs:
 		//            item.setChecked(true);
 		//            showTabsNav();
@@ -133,25 +148,25 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 		}
 	}
 
-//	private void rotateRightFrag() {
-//		if (rightFrag != null) {
-//			//rightFrag.getView().animate()
-//			AnimatorSet set = new AnimatorSet();
-//			set.playTogether(
-////			    ObjectAnimator.ofFloat(myView, "rotationX", 0, 360),
-////			    ObjectAnimator.ofFloat(rightFrag.getView(), "rotationY", 0, 180)
-////			    ObjectAnimator.ofFloat(myView, "rotation", 0, -90),
-//			    ObjectAnimator.ofFloat(rightFrag.getView(), "translationX", 0, 90000)
-////			    ObjectAnimator.ofFloat(myView, "translationY", 0, 90),
-////			    ObjectAnimator.ofFloat(rightFrag.getView(), "scaleX", 1, 0f),
-////			    ObjectAnimator.ofFloat(rightFrag.getView(), "scaleY", 1, 0f),
-////			    ObjectAnimator.ofFloat(rightFrag.getView(), "alpha", 1, 0.25f, 1)
-//			);
-//			set.setDuration(5 * 100).start();
-////			ObjectAnimator.ofFloat(rightFrag.getView(), "alpha", 0f)
-////			.setDuration(500).start();
-//		}
-//	}
+	//	private void rotateRightFrag() {
+	//		if (rightFrag != null) {
+	//			//rightFrag.getView().animate()
+	//			AnimatorSet set = new AnimatorSet();
+	//			set.playTogether(
+	////			    ObjectAnimator.ofFloat(myView, "rotationX", 0, 360),
+	////			    ObjectAnimator.ofFloat(rightFrag.getView(), "rotationY", 0, 180)
+	////			    ObjectAnimator.ofFloat(myView, "rotation", 0, -90),
+	//			    ObjectAnimator.ofFloat(rightFrag.getView(), "translationX", 0, 90000)
+	////			    ObjectAnimator.ofFloat(myView, "translationY", 0, 90),
+	////			    ObjectAnimator.ofFloat(rightFrag.getView(), "scaleX", 1, 0f),
+	////			    ObjectAnimator.ofFloat(rightFrag.getView(), "scaleY", 1, 0f),
+	////			    ObjectAnimator.ofFloat(rightFrag.getView(), "alpha", 1, 0.25f, 1)
+	//			);
+	//			set.setDuration(5 * 100).start();
+	////			ObjectAnimator.ofFloat(rightFrag.getView(), "alpha", 0f)
+	////			.setDuration(500).start();
+	//		}
+	//	}
 
 	private void showStandardNav() {
 		ActionBar ab = getSupportActionBar();
@@ -178,12 +193,28 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 	}
 
 	public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
+		switch(tab.getPosition()) {
+		// Details
+		case 0:
+//			ft.remove(leftFrag);
+//			ft.remove(rightFrag);
+			leftFrag = new RecentImageListFragment();
+			rightFrag = new DetailFragment();
+			ft.replace(R.id.leftFragment, leftFrag);
+			ft.replace(R.id.rightFragment, rightFrag);
+			//ft.commit();
+			break;
+		// Camera
+		case 1: break;
+		}
+		int lolol = 5+5+5+5;
 		// FIXME add a proper implementation, for now just rotate the left
 		// fragment
 		//rotateRightFrag();
-//		ft.add(R.id.detailFragment, new CameraFragment(getResources().getColor(
-//                R.color.android_green), 1f, 0, 0, 0, 0));
+		//		ft.add(R.id.detailFragment, new CameraFragment(getResources().getColor(
+		//                R.color.android_green), 1f, 0, 0, 0, 0));
 		//ft.commit();
+		lolol++;
 	}
 
 	public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {
