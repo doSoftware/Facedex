@@ -1,20 +1,26 @@
 package com.dosoftware.utils;
 
-import com.dosoftware.facedex.FaceRecActivity;
+
+import com.dosoftware.facedex.DetailActivity;
 
 import android.content.Context;
 import android.content.Intent;
 
 public class IntentHelper {
-	static public Intent startFaceRecActivity(Context c) {
-		return new Intent(c, FaceRecActivity.class)
+	public static Intent startActivityFragmentDetail(Context c, String item) {
+		return new Intent(c, DetailActivity.class)
+			.putExtra("value", item)
 			.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 	}
-
-	//	static public Intent startActivityFragment(Context c) {
-	//return new Intent(c, com.mgj.alib.fragment.MainActivity.class)
-	//.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-	//.putExtra(PoiContentActivity.COMMAND, PoiContentActivity.COMMAND_BUBBLETAP_ID)
-	//.putExtra(PoiContentActivity.EXTRAS_BUBBLETAP_ID, bubbleID));
+//	static public Intent startFaceRecActivity(Context c) {
+//		return new Intent(c, FaceRecActivity.class)
+//		.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//	}
+	
+//	public static Intent startActivityFragmentDetail(Context c, String item) {
+//		return new Intent(c, DetailActivity.class)
+//			.putExtra("value", item)
+//			.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//	}
 }
 

@@ -31,4 +31,13 @@
     <string name="action_label_bak_none">None</string>
     <string name="action_label_bak_gradient">Gradient</string>
     <string name="action_label_bak_image">Image</string>
+    
+    <string name="loading_text_general">Loading, please wait</string>
+    <string name="loading_text_sync">Synchronizing with server, please wait</string>
+    <string name="loading_text_process_image">Processing image, please wait</string>
+    <string name="welcome_text">Facedex</string>
+    
+    <string name="latest_image_name">LatestFacedex</string>
+    <string name="latest_image_full_path">/sdcard/facedex/LatestFacedex.jpg</string>
+    <string name="drawn_latest_full_path">/sdcard/facedex/FacedexDraw.jpg</string>
 </resources>

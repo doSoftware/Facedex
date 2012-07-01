@@ -2,229 +2,192 @@ package com.dosoftware.facedex;
 
 
 import android.os.Bundle;
-import android.view.SurfaceHolder;
-import android.widget.TextView;
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import android.os.Handler;
+import android.support.v4.app.FragmentTransaction;
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.internal.nineoldandroids.animation.ObjectAnimator;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.PixelFormat;
-import android.graphics.Bitmap.CompressFormat;
-import android.hardware.Camera;
-import android.util.Log;
-import android.view.SurfaceView;
-import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
-import android.view.View.OnClickListener;
-import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
-import android.widget.Toast;
-import android.widget.ToggleButton;
+public class MainActivity extends SherlockFragmentActivity implements ActionBar.TabListener {
 
-import com.actionbarsherlock.app.SherlockActivity;
+	private final Handler handler = new Handler();
+	private DetailFragment leftFrag;
+	private DetailFragment rightFrag;
+	private boolean useLogo = false;
+	private boolean showHomeUp = false;
 
-public class MainActivity extends SherlockActivity implements SurfaceHolder.Callback,
-OnCheckedChangeListener {
-	static final int FOTO_MODE = 0;
-	private static final String TAG = "MainActivity";
-	Camera mCamera;
-	boolean mPreviewRunning = false;
-	private Context mContext = this;
-
-	public void onCreate(Bundle icicle) {
-		super.onCreate(icicle);
-		Log.e(TAG, "onCreate");
-
-		// Fullscreen
-		getWindow().setFormat(PixelFormat.TRANSLUCENT);
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-				WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
+	/** Called when the activity is first created. */
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 
-		mSurfaceView = (SurfaceView) findViewById(R.id.surface_camera);
-		mSurfaceView.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
-				mCamera.takePicture(null, mPictureCallback, mPictureCallback);
-			}
-		});
-		mSurfaceHolder = mSurfaceView.getHolder();
-		mSurfaceHolder.addCallback(this);
-		mSurfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
-
-		ToggleButton blitz = (ToggleButton) findViewById(R.id.toggleButton1);
-		blitz.setOnCheckedChangeListener(this);
-
-		Context context = getApplicationContext();
-		String text = "Please click the screen to start recognizing people!"; 
-		Toast toast = Toast.makeText(context, text, Toast.LENGTH_LONG);
-		toast.show();
+		// default to tab navigation
+		showTabsNav();
+		//    
+//		//    // create a couple of simple fragments as placeholders
+//		final int MARGIN = 16;
+//		leftFrag = new CameraFragment(getResources().getColor(
+//				R.color.android_green), 1f, MARGIN, MARGIN / 2, MARGIN, MARGIN);
+//		rightFrag = new CameraFragment(getResources().getColor(
+//				R.color.honeycombish_blue), 2f, MARGIN / 2, MARGIN, MARGIN,
+//				MARGIN);
 	}
 
 	@Override
-	protected void onRestoreInstanceState(Bundle savedInstanceState) {
-		super.onRestoreInstanceState(savedInstanceState);
-	}
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getSupportMenuInflater().inflate(R.menu.main_menu, menu);
 
-	Camera.PictureCallback mPictureCallback = new Camera.PictureCallback() {
-		public void onPictureTaken(byte[] imageData, Camera c) {
-
-			if (imageData != null) {
-				Intent mIntent = new Intent();
-				StoreByteImage(mContext, imageData, 100, "LatestWingman");
-
-				// Run face recognition activity
-				Intent myIntent = new Intent(getBaseContext(), FaceRecActivity.class);
-				startActivity(myIntent);
-
-				// Face rec done, go back to cam preview
-				mCamera.startPreview();
-				setResult(FOTO_MODE, mIntent);
-				//finish();
-			}
-		}
-	};
-
-	protected void onResume() {
-		Log.e(TAG, "onResume");
-		super.onResume();
-	}
-
-	protected void onSaveInstanceState(Bundle outState) {
-		super.onSaveInstanceState(outState);
-	}
-
-	protected void onStop() {
-		Log.e(TAG, "onStop");
-		super.onStop();
-	}
-
-	public void surfaceCreated(SurfaceHolder holder) {
-		Log.e(TAG, "surfaceCreated");
-		mCamera = Camera.open();
-
-	}
-
-	public void surfaceChanged(SurfaceHolder holder, int format, int w, int h) {
-		Log.e(TAG, "surfaceChanged");
-
-		// XXX stopPreview() will crash if preview is not running
-		if (mPreviewRunning) {
-			mCamera.stopPreview();
-		}
-
-		Camera.Parameters p = mCamera.getParameters();
-		p.setPreviewSize(w, h);
-		mCamera.setParameters(p);
-		try {
-			mCamera.setPreviewDisplay(holder);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		mCamera.startPreview();
-		mPreviewRunning = true;
-	}
-
-	public void surfaceDestroyed(SurfaceHolder holder) {
-		Log.e(TAG, "surfaceDestroyed");
-		mCamera.stopPreview();
-		mPreviewRunning = false;
-		mCamera.release();
-	}
-
-	private SurfaceView mSurfaceView;
-	private SurfaceHolder mSurfaceHolder;
-
-
-
-	public static boolean StoreByteImage(Context mContext, byte[] imageData,
-			int quality, String expName) {
-
-		File sdImageMainDirectory = new File("/sdcard/wingman");
-		sdImageMainDirectory.mkdirs();
-		FileOutputStream fileOutputStream = null;
-		try {
-
-			BitmapFactory.Options options=new BitmapFactory.Options();
-			options.inSampleSize = 5;
-
-			Bitmap myImage = BitmapFactory.decodeByteArray(imageData, 0,
-					imageData.length,options);
-
-
-			fileOutputStream = new FileOutputStream(
-					sdImageMainDirectory.toString() +"/" + expName + ".jpg");
-
-
-			BufferedOutputStream bos = new BufferedOutputStream(
-					fileOutputStream);
-
-			myImage.compress(CompressFormat.JPEG, quality, bos);
-
-			bos.flush();
-			bos.close();
-
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		return true;
+		// set up a listener for the refresh item
+		//        final MenuItem refresh = (MenuItem) menu.findItem(R.id.menu_refresh);
+		//        refresh.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+		//            // on selecting show progress spinner for 1s
+		//            public boolean onMenuItemClick(MenuItem item) {
+		//                // item.setActionView(R.layout.progress_action);
+		//                handler.postDelayed(new Runnable() {
+		//                    public void run() {
+		//                        refresh.setActionView(null);
+		//                    }
+		//                }, 1000);
+		//                return false;
+		//            }
+		//        });
+		return super.onCreateOptionsMenu(menu);
 	}
 
 	@Override
-	public void onCheckedChanged(CompoundButton arg0, boolean arg1) {
-		if (mCamera == null)
-		{
-			return;
-		}
-		Camera.Parameters params = mCamera.getParameters();
-		String value;
-		boolean isOn;
-		isOn = arg0.isChecked();
-		if (isOn) // we are being ask to turn it on
-		{
-			value = Camera.Parameters.FLASH_MODE_TORCH;
-		}
-		else  // we are being asked to turn it off
-		{
-			value =  Camera.Parameters.FLASH_MODE_OFF;
-		}
-
-		try{    
-			params.setFlashMode(value);
-			mCamera.setParameters(params);
-
-			String nowMode = mCamera.getParameters().getFlashMode();
-
-			if (isOn && nowMode.equals(Camera.Parameters.FLASH_MODE_TORCH))
-			{
-				return;
-			}
-			if (! isOn && nowMode.equals(Camera.Parameters.FLASH_MODE_AUTO))
-			{
-				return;
-			}
-			return;
-		}
-		catch (Exception ex)
-		{
-			Log.e(TAG, this.getClass().getSimpleName() +  " error setting flash mode to: "+ value + " " + ex.toString());
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+//		case android.R.id.home:
+//			// TODO handle clicking the app icon/logo
+//			return false;
+//			//        case R.id.menu_refresh:
+//			//            // switch to a progress animation
+//			//            item.setActionView(R.layout.indeterminate_progress_action);
+//			//            return true;
+//			//        case R.id.menu_both:
+//			//            // rotation animation of green fragment
+//			//            rotateLeftFrag();
+//			//            return true;
+//		case R.id.menu_text:
+//			// alpha animation of blue fragment
+//			ObjectAnimator alpha = ObjectAnimator.ofFloat(rightFrag.getView(),
+//					"alpha", 1f, 0f);
+//			alpha.setRepeatMode(ObjectAnimator.REVERSE);
+//			alpha.setRepeatCount(1);
+//			alpha.setDuration(800);
+//			alpha.start();
+//			return true;
+//		case R.id.menu_logo:
+//			useLogo = !useLogo;
+//			item.setChecked(useLogo);
+//			getSupportActionBar().setDisplayUseLogoEnabled(useLogo);
+//			return true;
+//		case R.id.menu_up:
+//			showHomeUp = !showHomeUp;
+//			item.setChecked(showHomeUp);
+//			getSupportActionBar().setDisplayHomeAsUpEnabled(showHomeUp);
+//			return true;
+			//        case R.id.menu_nav_tabs:
+			//            item.setChecked(true);
+			//            showTabsNav();
+			//            return true;
+			//        case R.id.menu_nav_label:
+			//            item.setChecked(true);
+			//            showStandardNav();
+			//            return true;
+			//        case R.id.menu_nav_drop_down:
+			//            item.setChecked(true);
+			//            showDropDownNav();
+			//            return true;
+//		case R.id.menu_bak_none:
+//			item.setChecked(true);
+//			getSupportActionBar().setBackgroundDrawable(null);
+//			return true;
+//		case R.id.menu_bak_gradient:
+//			item.setChecked(true);
+//			//getSupportActionBar().setBackgroundDrawable(getResources().getDrawable(R.drawable.ad_action_bar_gradient_bak));
+//			return true;
+		default:
+			return super.onOptionsItemSelected(item);
 		}
 	}
+
+	private void rotateLeftFrag() {
+		if (leftFrag != null) {
+			ObjectAnimator.ofFloat(leftFrag.getView(), "rotationY", 0, 180)
+			.setDuration(500).start();
+		}
+	}
+
+	private void showStandardNav() {
+		ActionBar ab = getSupportActionBar();
+		if (ab.getNavigationMode() != ActionBar.NAVIGATION_MODE_STANDARD) {
+			ab.setDisplayShowTitleEnabled(true);
+			ab.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+		}
+	}
+
+	private void showDropDownNav() {
+		ActionBar ab = getSupportActionBar();
+		if (ab.getNavigationMode() != ActionBar.NAVIGATION_MODE_LIST) {
+			ab.setDisplayShowTitleEnabled(false);
+			ab.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+		}
+	}
+
+	private void showTabsNav() {
+		ActionBar ab = getSupportActionBar();
+		if (ab.getNavigationMode() != ActionBar.NAVIGATION_MODE_TABS) {
+			ab.setDisplayShowTitleEnabled(false);
+			ab.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+		}
+	}
+
+	public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
+		// FIXME add a proper implementation, for now just rotate the left
+		// fragment
+		rotateLeftFrag();
+	}
+
+	public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {
+		// FIXME implement this
+	}
+
+	public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft) {
+		// FIXME implement this
+	}
+
 }
+//	private CameraFragment leftFrag;
+//	private CameraFragment rightFrag;
+//
+//	@Override
+//	protected void onCreate(Bundle b) {
+//		super.onCreate(b);
+//		setContentView(R.layout.main);
+//		
+////		// default to tab navigation
+////        showTabsNav();
+//        
+//        // create a couple of simple fragments as placeholders
+//        final int MARGIN = 16;
+//        leftFrag = new CameraFragment(getResources().getColor(
+//                R.color.android_green), 1f, MARGIN, MARGIN / 2, MARGIN, MARGIN);
+//        rightFrag = new CameraFragment(getResources().getColor(
+//                R.color.honeycombish_blue), 2f, MARGIN / 2, MARGIN, MARGIN,
+//                MARGIN);
+//
+//        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+//        ft.add(R.id.root, leftFrag);
+//        ft.add(R.id.root, rightFrag);
+//        ft.commit();
+//	}
+//
+//	private void showTabsNav() {
+//		// TODO Auto-generated method stub
+//		
+//	}
+//}

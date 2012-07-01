@@ -1,18 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
-    
-	<SurfaceView android:id="@+id/surface_camera"
-		android:layout_width="fill_parent" 
-		android:layout_height="fill_parent"
-		android:layout_weight="1" />
-		
-		    
-    <ToggleButton 
-    	android:text="ToggleButton" 
-    	android:id="@+id/toggleButton1" 
-    	android:layout_width="wrap_content" 
-    	android:layout_height="wrap_content" />
-	
-</FrameLayout>
+    android:layout_height="fill_parent" >
+
+    <fragment
+        android:id="@+id/listFragment"
+        android:layout_width="150dip"
+        android:layout_height="match_parent"
+        class="com.dosoftware.facedex.DemoListFragment" >
+    </fragment>
+
+    <fragment
+        android:id="@+id/detailFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        class="com.dosoftware.facedex.DetailFragment"
+        tools:layout="@layout/fragment_details" >
+
+    </fragment>
+
+</LinearLayout>

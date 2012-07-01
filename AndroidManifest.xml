@@ -46,6 +46,15 @@
             android:name=".DisplayDescriptionSelectActivity"
             android:label="@string/application_name" >
         </activity>
+        <activity
+            android:name=".CameraActivity"
+            android:label="@string/application_name" >
+        </activity>
+                <activity
+            android:name=".DetailActivity"
+            android:label="@string/application_name" >
+        </activity>
+        
     </application>
 
 </manifest>
