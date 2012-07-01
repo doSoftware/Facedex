@@ -5,6 +5,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.view.View;
+import android.widget.TextView;
+
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
@@ -135,25 +138,25 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 		}
 	}
 
-	private void rotateRightFrag() {
-		if (rightFrag != null) {
-			//rightFrag.getView().animate()
-			AnimatorSet set = new AnimatorSet();
-			set.playTogether(
-//			    ObjectAnimator.ofFloat(myView, "rotationX", 0, 360),
-			    ObjectAnimator.ofFloat(rightFrag.getView(), "rotationY", 0, 180)
-//			    ObjectAnimator.ofFloat(myView, "rotation", 0, -90),
-//			    ObjectAnimator.ofFloat(myView, "translationX", 0, 90),
-//			    ObjectAnimator.ofFloat(myView, "translationY", 0, 90),
-//			    ObjectAnimator.ofFloat(myView, "scaleX", 1, 1.5f),
-//			    ObjectAnimator.ofFloat(myView, "scaleY", 1, 0.5f),
-//			    ObjectAnimator.ofFloat(myView, "alpha", 1, 0.25f, 1)
-			);
-			set.setDuration(5 * 1000).start();
-//			ObjectAnimator.ofFloat(rightFrag.getView(), "alpha", 0f)
-//			.setDuration(500).start();
-		}
-	}
+//	private void rotateRightFrag() {
+//		if (rightFrag != null) {
+//			//rightFrag.getView().animate()
+//			AnimatorSet set = new AnimatorSet();
+//			set.playTogether(
+////			    ObjectAnimator.ofFloat(myView, "rotationX", 0, 360),
+////			    ObjectAnimator.ofFloat(rightFrag.getView(), "rotationY", 0, 180)
+////			    ObjectAnimator.ofFloat(myView, "rotation", 0, -90),
+//			    ObjectAnimator.ofFloat(rightFrag.getView(), "translationX", 0, 90000)
+////			    ObjectAnimator.ofFloat(myView, "translationY", 0, 90),
+////			    ObjectAnimator.ofFloat(rightFrag.getView(), "scaleX", 1, 0f),
+////			    ObjectAnimator.ofFloat(rightFrag.getView(), "scaleY", 1, 0f),
+////			    ObjectAnimator.ofFloat(rightFrag.getView(), "alpha", 1, 0.25f, 1)
+//			);
+//			set.setDuration(5 * 100).start();
+////			ObjectAnimator.ofFloat(rightFrag.getView(), "alpha", 0f)
+////			.setDuration(500).start();
+//		}
+//	}
 
 	private void showStandardNav() {
 		ActionBar ab = getSupportActionBar();
@@ -182,7 +185,9 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 	public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
 		// FIXME add a proper implementation, for now just rotate the left
 		// fragment
-		rotateRightFrag();
+		//rotateRightFrag();
+//		ft.replace(R.id.detailFragment, new DetailFragment());
+//		ft.commit();
 	}
 
 	public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {

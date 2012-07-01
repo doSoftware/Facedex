@@ -1,6 +1,8 @@
 package com.dosoftware.facedex;
 
 import com.actionbarsherlock.app.SherlockFragment;
+import com.nineoldandroids.animation.AnimatorSet;
+import com.nineoldandroids.animation.ObjectAnimator;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -29,6 +31,11 @@ public class DetailFragment extends SherlockFragment {
 
 	public void setText(String item) {
 		TextView view = (TextView) getView().findViewById(R.id.detailsText);
+		AnimatorSet set = new AnimatorSet();
+		set.playTogether(
+				ObjectAnimator.ofFloat(view, "alpha", 0, 0.10f, 1)
+				);
+		set.setDuration(5 * 100).start();
 		view.setText(item);
 	}
 }
