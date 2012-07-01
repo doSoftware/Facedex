@@ -2,6 +2,7 @@
 <resources>
     <string-array name="tabs">
         <item>Details</item>
-        <item>Camera</item>        
+        <item>Camera</item>
+        <item>Loading</item>        
     </string-array>
 </resources>

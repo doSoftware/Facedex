@@ -13,6 +13,8 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.app.ActionBar.OnNavigationListener;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.dosoftware.utils.FragmentHelper;
+import com.dosoftware.utils.IntentHelper;
 import com.nineoldandroids.animation.ObjectAnimator;
 
 
@@ -21,8 +23,8 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 	private final Handler handler = new Handler();
 	private Fragment leftFrag;
 	private Fragment rightFrag;
+	private Fragment camFrag;
 	private boolean useLogo = false;
-	private boolean showHomeUp = false;
 	private String[] tabs;
 
 	/** Called when the activity is first created. */
@@ -40,33 +42,16 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 		}        
 		// default to tab navigation
 		showTabsNav();
+		
 		leftFrag = new RecentImageListFragment();
 		rightFrag = new DetailFragment();
-		
-		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-		ft.replace(R.id.leftFragment, leftFrag);
-		ft.replace(R.id.rightFragment, rightFrag);
-		ft.commit();
-		
-//		leftFrag = 		(Fragment) getSupportFragmentManager()
-//				.findFragmentById(R.id.leftFragment);
-//		rightFrag = 	(Fragment) getSupportFragmentManager()
-//				.findFragmentById(R.id.rightFragment);
+		camFrag = new CameraFragment();
 
-		//    
-		//		//    // create a couple of simple fragments as placeholders
-		//		final int MARGIN = 16;
-		//		leftFrag = new CameraFragment(getResources().getColor(
-		//				R.color.android_green), 1f, MARGIN, MARGIN / 2, MARGIN, MARGIN);
-		//		rightFrag = new CameraFragment(getResources().getColor(
-		//				R.color.honeycombish_blue), 2f, MARGIN / 2, MARGIN, MARGIN,
-		//				MARGIN);
-		//FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-		//ft.setCustomAnimations(R.anim.rotate, R.anim.rotate);
-		//		ft.replace(arg0, arg1)
-		//        ft.add(R.id.listFragment, leftFrag);
-		//        ft.add(R.id.detailFragment, rightFrag);
-		// ft.commit();
+		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+		FragmentHelper.showDetailFragment(ft, leftFrag, rightFrag, camFrag);
+		
+		//FragmentHelper.showDetailFragment(ft);
+
 	}
 
 	@Override
@@ -104,25 +89,25 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 		//			//            // rotation animation of green fragment
 		//			//            rotateLeftFrag();
 		//			//            return true;
-//				case R.id.menu_text:
-//					// alpha animation of blue fragment
-//					ObjectAnimator alpha = ObjectAnimator.ofFloat(rightFrag.getView(),
-//							"alpha", 1f, 0f);
-//					alpha.setRepeatMode(ObjectAnimator.REVERSE);
-//					alpha.setRepeatCount(1);
-//					alpha.setDuration(800);
-//					alpha.start();
-//					return true;
-//				case R.id.menu_logo:
-//					useLogo = !useLogo;
-//					item.setChecked(useLogo);
-//					getSupportActionBar().setDisplayUseLogoEnabled(useLogo);
-//					return true;
-//				case R.id.menu_up:
-//					showHomeUp = !showHomeUp;
-//					item.setChecked(showHomeUp);
-//					getSupportActionBar().setDisplayHomeAsUpEnabled(showHomeUp);
-//					return true;
+		//				case R.id.menu_text:
+		//					// alpha animation of blue fragment
+		//					ObjectAnimator alpha = ObjectAnimator.ofFloat(rightFrag.getView(),
+		//							"alpha", 1f, 0f);
+		//					alpha.setRepeatMode(ObjectAnimator.REVERSE);
+		//					alpha.setRepeatCount(1);
+		//					alpha.setDuration(800);
+		//					alpha.start();
+		//					return true;
+		//				case R.id.menu_logo:
+		//					useLogo = !useLogo;
+		//					item.setChecked(useLogo);
+		//					getSupportActionBar().setDisplayUseLogoEnabled(useLogo);
+		//					return true;
+		//				case R.id.menu_up:
+		//					showHomeUp = !showHomeUp;
+		//					item.setChecked(showHomeUp);
+		//					getSupportActionBar().setDisplayHomeAsUpEnabled(showHomeUp);
+		//					return true;
 		//        case R.id.menu_nav_tabs:
 		//            item.setChecked(true);
 		//            showTabsNav();
@@ -196,17 +181,17 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 		switch(tab.getPosition()) {
 		// Details
 		case 0:
-//			ft.remove(leftFrag);
-//			ft.remove(rightFrag);
-			leftFrag = new RecentImageListFragment();
-			rightFrag = new DetailFragment();
-			ft.replace(R.id.leftFragment, leftFrag);
-			ft.replace(R.id.rightFragment, rightFrag);
-			//ft.commit();
+			FragmentHelper.showDetailFragment(ft, leftFrag, rightFrag, camFrag);
 			break;
-		// Camera
-		case 1: break;
+			// Camera
+		case 1:
+			FragmentHelper.showCameraFragment(ft, leftFrag, rightFrag, camFrag);
+			break;
+		case 2: 
+			break;
 		}
+		
+		
 		int lolol = 5+5+5+5;
 		// FIXME add a proper implementation, for now just rotate the left
 		// fragment
