@@ -1,41 +1,45 @@
 package com.dosoftware.utils;
 
+import com.dosoftware.facedex.DetailFragment;
 import com.dosoftware.facedex.LoadingFragment;
 import com.dosoftware.facedex.R;
+import com.dosoftware.facedex.RecentImageListFragment;
+import com.dosoftware.facedex.SplitFragment;
+import com.nineoldandroids.animation.AnimatorSet;
+import com.nineoldandroids.animation.ObjectAnimator;
+
+import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-
+//
+//AnimatorSet set = new AnimatorSet();
+//set.playTogether(
+//		ObjectAnimator.ofFloat(tv, "alpha", 0, 0.25f, 1)
+//		);
+//set.setDuration(5 * 100).start();
 public class FragmentHelper {
-	public static void showDetailFragment(FragmentTransaction ft, Fragment leftFrag, Fragment rightFrag, Fragment camFrag, Fragment loadFrag) {
-		
-		if(leftFrag != null && !leftFrag.isVisible())	{
-			ft.add(R.id.leftFragment, leftFrag);
-			ft.show(leftFrag);
-		}
-		if(rightFrag != null && !rightFrag.isVisible()) { 
-			ft.add(R.id.rightFragment, rightFrag);
-			ft.show(rightFrag);
-		}
-		if(camFrag != null && camFrag.isVisible()) 		ft.remove(camFrag);
-		if(loadFrag != null && loadFrag.isVisible()) 	ft.remove(loadFrag);
-	}
-	
-	public static void showCameraFragment(FragmentTransaction ft, Fragment leftFrag, Fragment rightFrag, Fragment camFrag, Fragment loadFrag ) {
+	private SplitFragment mSplitFragment;
+	private LoadingFragment mLoadingFragment;
 
-//		if(leftFrag != null && leftFrag.isVisible()) 	ft.remove(leftFrag);
-//		if(rightFrag != null && rightFrag.isVisible()) 	ft.remove(rightFrag);
-//		if(camFrag != null && !camFrag.isVisible()) 	ft.add(R.id.root, camFrag);
-//		if(loadFrag != null && loadFrag.isVisible()) 	ft.remove(loadFrag);
+	public static final String TAG_SplitFragment = "split_tag";
+	public static final String TAG_LoadingFragment = "loading_tag";
+
+	private FragmentHelper() {
+		mSplitFragment = new SplitFragment();
+		mLoadingFragment = new LoadingFragment();
 	}
-	
-	public static void showLoadingFragment(FragmentTransaction ft, Fragment leftFrag, Fragment rightFrag, Fragment camFrag, Fragment loadFrag) {
-		
-		if(leftFrag != null && leftFrag.isVisible()) 	ft.remove(leftFrag);
-		if(rightFrag != null && rightFrag.isVisible()) 	ft.remove(rightFrag);
-		if(camFrag != null && camFrag.isVisible()) 		ft.remove(camFrag);
-		if(loadFrag != null && loadFrag.isVisible()) 	{
-			ft.add(R.id.root, loadFrag);
-			ft.show(loadFrag);
-		}
+
+	private void showSplitFragment(Context c, FragmentTransaction ft) {		
+		if(mLoadingFragment.isAdded() || mLoadingFragment.isInLayout()) ft.remove(mLoadingFragment);
+		if(!mSplitFragment.isAdded() || !mSplitFragment.isInLayout()) ft.add(R.id.root, mSplitFragment);
 	}
+
+	private void showLoadingFragment(FragmentTransaction ft) {
+		if(!mSplitFragment.isAdded() || mSplitFragment.isInLayout()) ft.remove(mSplitFragment);
+		if(!mLoadingFragment.isAdded() || !mSplitFragment.isInLayout()) ft.add(R.id.root, mLoadingFragment);
+	}
+//
+//	public void showSplitFragment(FragmentTransaction ft) {
+//		
+//	}
 }

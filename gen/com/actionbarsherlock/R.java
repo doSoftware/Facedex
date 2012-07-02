@@ -827,23 +827,23 @@ containing a value of this type.
         public static final int abs__title=0x7f05001b;
         public static final int abs__titleDivider=0x7f05001c;
         public static final int abs__up=0x7f05000b;
+        public static final int detailFragment=0x7f05002e;
         public static final int detailsText=0x7f05002c;
         public static final int disableHome=0x7f050009;
         public static final int facerecad=0x7f050029;
         public static final int homeAsUp=0x7f050006;
         public static final int imageView1=0x7f050027;
-        public static final int leftFragment=0x7f05002f;
+        public static final int listFragment=0x7f05002d;
         public static final int listMode=0x7f050002;
         public static final int normal=0x7f050001;
         public static final int progressBar1=0x7f050028;
-        public static final int rightFragment=0x7f050030;
-        public static final int root=0x7f05002e;
+        public static final int root=0x7f050030;
         public static final int showCustom=0x7f050008;
         public static final int showHome=0x7f050005;
         public static final int showTitle=0x7f050007;
         public static final int surface_camera=0x7f05002a;
         public static final int tabMode=0x7f050003;
-        public static final int textView1=0x7f05002d;
+        public static final int textView1=0x7f05002f;
         public static final int toggleButton1=0x7f05002b;
         public static final int useLogo=0x7f050004;
         public static final int wrap_content=0x7f050000;
@@ -875,10 +875,11 @@ containing a value of this type.
         public static final int facerec_activity=0x7f030014;
         public static final int fragment_camera=0x7f030015;
         public static final int fragment_details=0x7f030016;
-        public static final int loading=0x7f030017;
-        public static final int main=0x7f030018;
-        public static final int sherlock_spinner_dropdown_item=0x7f030019;
-        public static final int sherlock_spinner_item=0x7f03001a;
+        public static final int fragment_split=0x7f030017;
+        public static final int loading=0x7f030018;
+        public static final int main=0x7f030019;
+        public static final int sherlock_spinner_dropdown_item=0x7f03001a;
+        public static final int sherlock_spinner_item=0x7f03001b;
     }
     public static final class menu {
         public static final int main_menu=0x7f0d0000;

@@ -1,14 +1,14 @@
 package com.dosoftware.facedex;
 
-import com.actionbarsherlock.app.SherlockFragment;
-
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class LoadingFragment extends SherlockFragment {
-	public LoadingFragment() {
+import com.actionbarsherlock.app.SherlockFragment;
+
+public class SplitFragment extends SherlockFragment {
+	public SplitFragment() {
 		
 	}
 	
@@ -26,7 +26,7 @@ public class LoadingFragment extends SherlockFragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		super.onCreateView(inflater, container, savedInstanceState);
-		View view = inflater.inflate(R.layout.loading, container, true);
+		View view = inflater.inflate(R.layout.fragment_split, container, false);
 		return view;
 	}
 }

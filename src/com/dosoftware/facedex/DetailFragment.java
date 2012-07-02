@@ -1,14 +1,10 @@
 package com.dosoftware.facedex;
 
 import com.actionbarsherlock.app.SherlockFragment;
-import com.nineoldandroids.animation.AnimatorSet;
-import com.nineoldandroids.animation.ObjectAnimator;
-
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 public class DetailFragment extends SherlockFragment {
 	public DetailFragment() {

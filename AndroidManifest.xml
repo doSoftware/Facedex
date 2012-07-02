@@ -50,11 +50,14 @@
             android:name=".CameraActivity"
             android:label="@string/application_name" >
         </activity>
-                <activity
+        <activity
             android:name=".DetailActivity"
             android:label="@string/application_name" >
         </activity>
-        
+        <activity
+            android:name=".LoadingActivity"
+            android:label="@string/application_name" >
+        </activity>
     </application>
 
 </manifest>

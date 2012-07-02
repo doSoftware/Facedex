@@ -1,38 +1,32 @@
 package com.dosoftware.facedex;
 
-
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.widget.ArrayAdapter;
-
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.actionbarsherlock.app.ActionBar.OnNavigationListener;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.dosoftware.utils.FragmentHelper;
 import com.dosoftware.utils.IntentHelper;
-import com.nineoldandroids.animation.ObjectAnimator;
 
 
 public class MainActivity extends SherlockFragmentActivity implements ActionBar.TabListener {
 
 	private final Handler handler = new Handler();
-	private Fragment leftFrag;
 	private Fragment rightFrag;
-	private Fragment camFrag;
 	private boolean useLogo = false;
 	private String[] tabs;
-	private LoadingFragment loadFrag;
+	private FragmentHelper mFragmentHelper;
 
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.main);
+		setContentView(R.layout.fragment_split);
+		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();		
 		final ActionBar ab = getSupportActionBar();
 
 		// set up tabs nav
@@ -43,17 +37,12 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 		}        
 		// default to tab navigation
 		showTabsNav();
-		
-		leftFrag = new RecentImageListFragment();
-		rightFrag = new DetailFragment();
-		camFrag = new CameraFragment();
-		loadFrag = new LoadingFragment();
 
-		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-		FragmentHelper.showDetailFragment(ft, leftFrag, rightFrag, camFrag, loadFrag);
-		ft.commit();
+		//leftFrag = new RecentImageListFragment();
 		
-		//FragmentHelper.showDetailFragment(ft);
+		//camFrag = new CameraFragment();
+		//loadFrag = new LoadingFragment();
+
 
 	}
 
@@ -181,29 +170,15 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 	}
 
 	public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
-		switch(tab.getPosition()) {
-		// Details
-		case 0:
-			FragmentHelper.showDetailFragment(ft, leftFrag, rightFrag, camFrag, loadFrag);
-			break;
-			// Camera
-		case 1:
-			FragmentHelper.showCameraFragment(ft, leftFrag, rightFrag, camFrag, loadFrag);
-			break;
-		case 2: 
-			FragmentHelper.showLoadingFragment(ft, leftFrag, rightFrag, camFrag, loadFrag);
-			break;
-		}
-		
-		
-		int lolol = 5+5+5+5;
-		// FIXME add a proper implementation, for now just rotate the left
-		// fragment
-		//rotateRightFrag();
-		//		ft.add(R.id.detailFragment, new CameraFragment(getResources().getColor(
-		//                R.color.android_green), 1f, 0, 0, 0, 0));
-		//ft.commit();
-		lolol++;
+		// Check if the fragment is already initialized
+        if (rightFrag == null) {
+            // If not, instantiate and add it to the activity
+        	rightFrag = Fragment.instantiate(mActivity, mClass.getName());
+            ft.add(android.R.id.content, mFragment, mTag);
+        } else {
+            // If it exists, simply attach it in order to show it
+            ft.attach(mFragment);
+        }
 	}
 
 	public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {
